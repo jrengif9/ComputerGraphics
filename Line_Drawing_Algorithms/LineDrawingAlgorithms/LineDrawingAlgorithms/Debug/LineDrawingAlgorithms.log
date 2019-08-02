@@ -1,0 +1,4 @@
+﻿  Main.cpp
+c:\users\rengi\onedrive\escritorio\computergraphics\line_drawing_algorithms\linedrawingalgorithms\linedrawingalgorithms\main.cpp(34): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+c:\users\rengi\onedrive\escritorio\computergraphics\line_drawing_algorithms\linedrawingalgorithms\linedrawingalgorithms\main.cpp(43): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+  LineDrawingAlgorithms.vcxproj -> C:\Users\rengi\OneDrive\Escritorio\ComputerGraphics\Line_Drawing_Algorithms\LineDrawingAlgorithms\Debug\LineDrawingAlgorithms.exe
