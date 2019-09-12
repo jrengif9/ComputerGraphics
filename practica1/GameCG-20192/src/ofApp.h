@@ -24,4 +24,6 @@ class ofApp : public ofBaseApp{
 		void bresenhamX(int x0, int y0, int x1, int y1, int dx, int dy);
 		void bresenhamY(int x0, int y0, int x1, int y1, int dx, int dy);
 		void bresenham(int x0, int y0, int x1, int y1);
+
+		bool adentro(ofVec3f vertices[4], ofVec3f v1, ofVec3f v2, ofVec3f v3, ofVec3f v4);
 };

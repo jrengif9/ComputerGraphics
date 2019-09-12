@@ -10,6 +10,15 @@ ofVec3f centro;
 float angulo = 90;
 float escalarGrande = 1.1;
 float escalarChico = 0.9;
+int numpuntos = 0;
+ofVec3f puntos[1000];
+bool adentro1 = false;
+bool adentro2 = false;
+bool adentro3 = false;
+ofVec3f c1(875, 175, 0);
+ofVec3f c2(300, 350, 0);
+ofVec3f c3(525, 625, 0);
+int turno = 0;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -35,30 +44,83 @@ void ofApp::setup() {
 	}
 }
 
-//--------------------------------------------------------------
+//--------------------------------------------------------------3
 void ofApp::update() {
 
-
-	int mitadY = ((vertices[1].y - vertices[0].y) / 2) + vertices[0].y;
-	int mitadX = ((vertices[4].x - vertices[0].x) / 2) + vertices[0].x;
+	float mitadY = ((vertices[2].y - vertices[0].y)/2) + vertices[0].y;
+	float mitadX = ((vertices[3].x - vertices[1].x)/2) + vertices[1].x;
 
 	centro.set(mitadX, mitadY, 0);
 
+	if (turno == 1) {
+		bresenham(centro.x, centro.y, c1.x, c1.y);
+	}
+	if (turno == 2) {
+		bresenham(centro.x, centro.y, c2.x, c2.y);
+	}
+	if (turno == 3) {
+		bresenham(centro.x, centro.y, c3.x, c3.y);
+	}
+	if (turno == 4) {
+		turno = 0;
+	}
 
 
+	
+	if (adentro1 == false) {
+		adentro1 = adentro(vertices, ofVec3f(800, 100, 0), ofVec3f(800, 250, 0), ofVec3f(950, 250, 0), ofVec3f(950, 100, 0));
+	}
+	else {
+		adentro1 = true;
+	}
+	if (adentro2 == false) {
+		adentro2 = adentro(vertices, ofVec3f(300, 300, 0), ofVec3f(250, 350, 0), ofVec3f(300, 400, 0), ofVec3f(350, 350, 0));
+	} else {
+		adentro2 = true;
+	}
+	if (adentro3 == false) {
+		adentro3 = adentro(vertices, ofVec3f(500, 600, 0), ofVec3f(500, 650, 0), ofVec3f(550, 650, 0), ofVec3f(550, 600, 0));
+	} else {
+		adentro3 = true;
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
 
-	ofSetColor(ofColor::red);
-	ofNoFill();
-	ofBeginShape();
-	ofVertex(400, 0);
-	ofVertex(400, 100);
-	ofVertex(500, 100);
-	ofVertex(500, 0);
-	ofEndShape(true);
+	ofPushMatrix();
+	if (adentro1 == false) {
+		ofSetColor(ofColor::red);
+		ofNoFill();
+		ofBeginShape();
+		ofVertex(800, 100);
+		ofVertex(800, 250);
+		ofVertex(950, 250);
+		ofVertex(950, 100);
+		ofEndShape(true);
+	}
+
+	if (adentro2 == false) {
+		ofSetColor(ofColor::red);
+		ofNoFill();
+		ofBeginShape();
+		ofVertex(300, 300);
+		ofVertex(250, 350);
+		ofVertex(300, 400);
+		ofVertex(350, 350);
+		ofEndShape(true);
+	}
+
+	if (adentro3 == false) {
+		ofSetColor(ofColor::red);
+		ofNoFill();
+		ofBeginShape();
+		ofVertex(500, 600);
+		ofVertex(500, 650);
+		ofVertex(550, 650);
+		ofVertex(550, 600);
+		ofEndShape(true);
+	}
 
 	ofSetColor(ofColor::blue);
 	ofFill();
@@ -66,7 +128,14 @@ void ofApp::draw() {
 	for (int i = 0; i < 4; i++) {
 		mesh.addVertex(vertices[i]);
 	}
+
 	mesh.draw();
+
+	if ( turno != 0) {
+		for (int i = 0; i < numpuntos; i++) {
+			ofCircle(puntos[i].x, puntos[i].y, puntos[i].z);
+		}
+	}
 
 }
 
@@ -102,38 +171,38 @@ void ofApp::keyPressed(int key) {
 	if (key == 'm'){
 		for (int i = 0; i < 4; i++)
 		{
-			vertices[i].x = centro.x + (((vertices[i].x - centro.x)*cos(angulo))-((vertices[i].y-centro.y)*sin(angulo)));
-			vertices[i].y = centro.y + (((vertices[i].x - centro.x)*sin(angulo))+((vertices[i].y-centro.y)*cos(angulo)));
+			//vertices[i].x = vertices[3].x + (((vertices[i].x-vertices[3].x)*cos(angulo))-((vertices[i].y-vertices[3].y)*sin(angulo)));
+			//vertices[i].y = vertices[3].y + (((vertices[i].x-vertices[3].x)*sin(angulo))+((vertices[i].y-vertices[3].y)*cos(angulo)));
+
+			ofVec2f r(vertices[i].x, vertices[i].y);
+			r.rotate(10,ofVec2f(centro.x,centro.y));
+
+			vertices[i] = ofVec3f(r.x, r.y, 0);
+			
 		}
 	}
 
 	if (key == 'h') {
-		vertices[0].x = vertices[0].x - ((vertices[0].x * escalarGrande) - vertices[0].x);
-		vertices[0].y = vertices[0].y - ((vertices[0].y * escalarGrande) - vertices[0].y);
 
-		vertices[1].x = vertices[1].x - ((vertices[1].x * escalarGrande) - vertices[1].x);
-		vertices[1].y = vertices[1].y + ((vertices[1].y * escalarGrande) - vertices[1].y);
-
-		vertices[2].x = vertices[2].x + ((vertices[2].x * escalarGrande) - vertices[2].x);
-		vertices[2].y = vertices[2].y + ((vertices[2].y * escalarGrande) - vertices[2].y);
-
-		vertices[3].x = vertices[3].x + ((vertices[3].x * escalarGrande) - vertices[3]).x;
-		vertices[3].y = vertices[3].y - ((vertices[3].y * escalarGrande) - vertices[3]).y;
+		for (int i = 0; i < 4; i++)
+		{
+			vertices[i].x = vertices[i].x * escalarGrande;
+			vertices[i].y = vertices[i].y * escalarGrande;
+		}
 	}
 	if (key == 'g') {
 
-		vertices[0].x = vertices[0].x + (vertices[0].x - (vertices[0].x * escalarChico));
-		vertices[0].y = vertices[0].y + (vertices[0].y - (vertices[0].y * escalarChico));
-
-		vertices[1].x = vertices[1].x + (vertices[1].x - (vertices[1].x * escalarChico));
-		vertices[1].y = vertices[1].y - (vertices[1].y - (vertices[1].y * escalarChico));
-
-		vertices[2].x = vertices[2].x - (vertices[2].x - (vertices[2].x * escalarChico));
-		vertices[2].y = vertices[2].y - (vertices[2].y - (vertices[2].y * escalarChico));
-
-		vertices[3].x = vertices[3].x - (vertices[3].x - (vertices[3].x * escalarChico));
-		vertices[3].y = vertices[3].y + (vertices[3].y - (vertices[3].y * escalarChico));
+		for (int i = 0; i < 4; i++)
+		{
+			vertices[i].x = vertices[i].x * escalarChico;
+			vertices[i].y = vertices[i].y * escalarChico;
+		}
 	}
+	if (key == 'j') {
+		turno += 1;
+	}
+	
+
 }
 
 //--------------------------------------------------------------
@@ -198,7 +267,8 @@ void ofApp::bresenhamX(int x0, int y0, int x1, int y1, int dx, int dy)
 		swap(x0, x1);
 		swap(y0, y1);
 	}
-	ofPoint(x0, y0);
+	numpuntos += 1;
+	puntos[numpuntos-1]= ofVec3f(x0, y0, 1);
 	while (x0 < x1) {
 		if (i < 0)
 			i += j;
@@ -210,7 +280,8 @@ void ofApp::bresenhamX(int x0, int y0, int x1, int y1, int dx, int dy)
 			i += k;
 		}
 		++x0;
-		ofPoint(x0, y0);
+		puntos[numpuntos - 1] = ofVec3f(x0, y0, 1);
+		numpuntos += 1;
 	}
 }
 
@@ -226,7 +297,8 @@ void ofApp::bresenhamY(int x0, int y0, int x1, int y1, int dx, int dy)
 		swap(x0, x1);
 		swap(y0, y1);
 	}
-	ofPoint(x0, y0);
+	numpuntos += 1;
+	puntos[numpuntos - 1] = ofVec3f(x0, y0, 1);
 	while (y0 < y1) {
 		if (i < 0)
 			i += j;
@@ -238,13 +310,16 @@ void ofApp::bresenhamY(int x0, int y0, int x1, int y1, int dx, int dy)
 			i += k;
 		}
 		++y0;
-		ofPoint(x0, y0);
+		puntos[numpuntos - 1] = ofVec3f(x0, y0, 1);
+		numpuntos += 1;
 	}
 }
 
 //Called by mouse(), will call the appropriate function depending on the length of the X and Y axis
 void ofApp::bresenham(int x0, int y0, int x1, int y1)
 {
+	numpuntos = 0;
+
 	int dx = abs(x1 - x0);
 	int dy = abs(y1 - y0);
 
@@ -252,6 +327,24 @@ void ofApp::bresenham(int x0, int y0, int x1, int y1)
 		bresenhamX(x0, y0, x1, y1, dx, dy);
 	else
 		bresenhamY(x0, y0, x1, y1, dx, dy);
+}
+
+bool ofApp::adentro(ofVec3f vertices[4], ofVec3f v1, ofVec3f v2, ofVec3f v3, ofVec3f v4) {
+
+	int cont = 0;
+	for(int i = 0; i < 4; i++) {
+		if ((vertices[i].x >= v2.x && vertices[i].x <= v4.x) && (vertices[i].y >= v1.y && vertices[i].y <= v3.y)) {
+			cont += 1;
+		}
+	}
+	
+	if (cont == 4) {
+		return true;
+	}
+	else {
+		return false;
+	}
+
 }
 
 
