@@ -27,8 +27,6 @@ void setPixelDDA(int x, int y)
 	glEnd();
 }
 
-
-
 void lineDDA(GLfloat m) {
 	xi += 100;
 	xf += 100;
