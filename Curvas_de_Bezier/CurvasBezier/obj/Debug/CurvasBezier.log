@@ -1,0 +1,11 @@
+﻿  ofApp.cpp
+c:\users\rengi\onedrive\escritorio\of_v0.10.1_vs2017_release\apps\myapps\curvasbezier\src\ofapp.cpp(42): warning C4996: 'ofCircle': Use ofDrawCircle instead
+  c:\users\rengi\onedrive\escritorio\of_v0.10.1_vs2017_release\libs\openframeworks\graphics\ofgraphics.h(500): note: vea la declaración de 'ofCircle'
+  CurvasBezier.vcxproj -> C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\apps\myApps\CurvasBezier\bin\CurvasBezier_debug.exe
+  
+  	                   2	C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\libs\fmodex\lib\vs\Win32\
+  	  *Archivo EXTRA		 6018560	C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\apps\myApps\CurvasBezier\bin\FreeImage.dll
+  
+  	                   1	C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\libs\FreeImage\lib\vs\Win32\
+  	  *Archivo EXTRA		 1266176	C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\apps\myApps\CurvasBezier\bin\fmodex.dll
+  	  *Archivo EXTRA		 1312768	C:\Users\rengi\OneDrive\Escritorio\of_v0.10.1_vs2017_release\apps\myApps\CurvasBezier\bin\fmodexL.dll
